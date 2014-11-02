@@ -1,18 +1,29 @@
-package matrix;
+package buzov.task3.matrix;
 
 import java.util.Random;
-import matrix.err.MatrixIndexOutOfBoundsException;
-import matrix.err.WrongRangeException;
+import buzov.task3.matrix.err.MatrixIndexOutOfBoundsException;
+import buzov.task3.matrix.err.WrongRangeException;
 
 public class CreatorMatrix {
 
+    public static int[][] makeRandomInt(int rows, int cols) {
+        int[][] matrix;
+        matrix = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = (int) (Math.random() * 10);   // fill with random values
+            }
+        }
+        return matrix;
+    }
+    
     // returns randomized matrix:
     public static double[][] makeRandom(int rows, int cols) {
         double[][] matrix;
         matrix = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                matrix[i][j] = Math.random() * 1000;   // fill with random values
+                matrix[i][j] = Math.random() * 10;   // fill with random values
             }
         }
         return matrix;

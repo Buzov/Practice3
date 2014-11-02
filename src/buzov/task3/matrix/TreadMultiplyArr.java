@@ -1,6 +1,8 @@
-package matrix;
+package buzov.task3.matrix;
 
-public class TreadMultiply implements Runnable {
+import java.util.ArrayList;
+
+public class TreadMultiplyArr implements Runnable {
 
     private boolean stopTread = false;
     private int numderTread = 0;
@@ -10,15 +12,17 @@ public class TreadMultiply implements Runnable {
     private int aCols;
     //private int bRows;
     private int bCols;
-    private double[][] A;
-    private double[][] B;
-    private double[][] C;
+    private ArrayList<ArrayList<Double>> A;
+    private ArrayList<ArrayList<Double>> B;
+    private ArrayList<ArrayList<Double>> C;
 
-    public TreadMultiply(double[][] A, double[][] B, double[][] C) {
-        rowTotal = A.length;
-        this.aCols = A[0].length;
+    public TreadMultiplyArr(ArrayList<ArrayList<Double>> A,
+                            ArrayList<ArrayList<Double>> B,
+                            ArrayList<ArrayList<Double>> C) {
+        rowTotal = A.size();
+        this.aCols = A.get(0).size();
         //this.bRows = B.length;
-        this.bCols = B[0].length;;
+        this.bCols = B.get(0).size();
         this.A = A;
         this.B = B;
         this.C = C;
@@ -26,7 +30,7 @@ public class TreadMultiply implements Runnable {
         numderTread = sumTread;
     }
 
-    public TreadMultiply(MatrixD A, MatrixD B, MatrixD C) {
+    public TreadMultiplyArr(MatrixArr A, MatrixArr B, MatrixArr C) {
         rowTotal = A.getRowsCount();
         this.aCols = A.getColsCount();
         this.bCols = B.getColsCount();
@@ -63,9 +67,11 @@ public class TreadMultiply implements Runnable {
         int range = aRows + step;
         for (int i = aRows; i < range; i++) {
             for (int j = 0; j < bCols; j++) {
+                double temp = 0;
                 for (int k = 0; k < aCols; k++) {
-                    C[i][j] += (A[i][k] * B[k][j]);
+                    temp += A.get(i).get(k) * B.get(k).get(j);
                 }
+                C.get(i).set(j, temp);
             }
         }
 
