@@ -4,25 +4,24 @@ import java.util.Random;
 import matrix.err.MatrixIndexOutOfBoundsException;
 import matrix.err.WrongRangeException;
 
-
 public class CreatorMatrix {
-    
+
     // returns randomized matrix:
-    public static double[][] makeRandom(int rows, int cols)
-    {
-	double[][] matrix;
-	matrix = new double[rows][cols];
-	for (int i=0;i<rows;i++)
-	    for (int j=0;j<cols;j++)
-		matrix[i][j] = Math.random() * 1000;   // fill with random values
-	return matrix;
+    public static double[][] makeRandom(int rows, int cols) {
+        double[][] matrix;
+        matrix = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = Math.random() * 1000;   // fill with random values
+            }
+        }
+        return matrix;
     }
 
-       
-    public static void fromRandom(Matrix m, int min, int max) throws MatrixIndexOutOfBoundsException, 
+    public static void fromRandom(MatrixD m, int min, int max) throws MatrixIndexOutOfBoundsException,
                                                                      WrongRangeException {
-        int cols = m.colsCount();
-        int rows = m.rowsCount();
+        int cols = m.getColsCount();
+        int rows = m.getRowsCount();
 
         if (max < min) {
             throw new WrongRangeException();
@@ -38,10 +37,10 @@ public class CreatorMatrix {
         }
     }
 
-    public static void fromRandom(Matrix m, double min, double max) throws MatrixIndexOutOfBoundsException, 
+    public static void fromRandom(MatrixD m, double min, double max) throws MatrixIndexOutOfBoundsException,
                                                                            WrongRangeException {
-        int cols = m.colsCount();
-        int rows = m.rowsCount();
+        int cols = m.getColsCount();
+        int rows = m.getRowsCount();
 
         if (max < min) {
             throw new WrongRangeException();
@@ -57,28 +56,14 @@ public class CreatorMatrix {
         }
     }
 
-    public static void fromRandom(Matrix m, int max) throws MatrixIndexOutOfBoundsException, 
+    public static void fromRandom(MatrixD m, int max) throws MatrixIndexOutOfBoundsException,
                                                             WrongRangeException {
         fromRandom(m, 0, max);
     }
 
-    public static void fromRandom(Matrix m, double max) throws MatrixIndexOutOfBoundsException, 
+    public static void fromRandom(MatrixD m, double max) throws MatrixIndexOutOfBoundsException,
                                                                WrongRangeException {
         fromRandom(m, 0.0, max);
     }
-    
-    
-    // prints matrix
-    public static void printmatrix(double[][] matrix)
-    {
-	int rows = matrix.length;
-	int cols = matrix[0].length;
-	for (int i=0;i<rows;i++)
-	  {
-	    for (int j=0;j<cols;j++)
-		System.out.print(matrix[i][j]+"\t");
-	    System.out.print("\n");
-	  }
-    } // printmatrix
 
 }

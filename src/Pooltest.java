@@ -1,7 +1,7 @@
 
 public class Pooltest {
 
-    public static void main(String[] args) throws Exception {
+   /*public static void main(String[] args) throws Exception {
         int i;
         ThreadPool pool = new ThreadPool(4);  // make pool of 4 worker threads
         for (i = 0; i < 16; i++) // submit 16 jobs to pool
@@ -15,5 +15,5 @@ public class Pooltest {
         System.out.println("All jobs complete");
         System.out.flush();
         pool.submit(new mMyJob(17, 17)); //submit a new job 
-    }
+    }*/
 }
