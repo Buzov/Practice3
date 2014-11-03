@@ -45,7 +45,7 @@ public class TreadMultiplyD implements Runnable {
         while (!stopTread) {
 
             aRows = MatrixD.getRowsForTreadWithInkrement();
-            System.out.println("the tread number " + numderTread + ". Rows = " + aRows);
+            System.out.println("The tread number " + numderTread + ". Rows = " + aRows);
 
             if (aRows >= rowTotal) {
                 stopTread();
@@ -54,20 +54,20 @@ public class TreadMultiplyD implements Runnable {
             }
         }
 
-        System.out.println("the stream number " + numderTread + " stopped.");
+        System.out.println("The stream number " + numderTread + " stopped.");
 
     }
 
     private void multiply(int aRows) {
         int step = MatrixD.stepRow;
-        int range = aRows + step;
-        for (int i = aRows; i < range; i++) {
+        int range = aRows;
+        //for (int i = aRows; i < rowTotal; i++) {
             for (int j = 0; j < bCols; j++) {
                 for (int k = 0; k < aCols; k++) {
-                    C[i][j] += (A[i][k] * B[k][j]);
+                    C[aRows][j] += (A[aRows][k] * B[k][j]);
                 }
             }
-        }
+        //}
 
     }
 

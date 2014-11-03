@@ -109,31 +109,28 @@ public class MatrixD implements Matrix {
         if (aCols != bRows) {
             throw new RuntimeException("Illegal matrix dimensions.");
         }
-
-        System.out.println("Перемножение матриц размерами " + aRows
-                + " столбцов и " + aCols + " строк и " + bRows
-                + " столбцов и " + bCols + " строк");
+        System.out.println("Type of data is double[][].");
+        System.out.println("Multiplication of matrixes A" + aRows
+                + "x" + aCols + " and B" + bRows
+                + "x" + bCols + ".");
         long startTime = System.currentTimeMillis();
 
         double[][] C = new double[aRows][bCols];
         for (int i = 0; i < aRows; i++) {
             for (int j = 0; j < bCols; j++) {
                 for (int k = 0; k < aCols; k++) {
-                    System.out.print("*" + B[k][j] + "+");
                     C[i][j] += (A[i][k] * B[k][j]);
                 }
-                System.out.println();
             }
         }
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
-        System.out.println("Перемножение матриц выполнено за " + time + " мс");
+        System.out.println("Multiplication of matrixes lasted " + time + " ms.");
         return C;
     }
 
     public static MatrixD multiply(MatrixD mA, MatrixD mB) throws IllegalSizesException {
-        System.out.println("проблема здесь");
-        
+
         double[][] A = mA.getArray();
         double[][] B = mB.getArray();
 
@@ -151,32 +148,32 @@ public class MatrixD implements Matrix {
             throw new RuntimeException("Illegal matrix dimensions.");
         }
         double[][] C = new double[aRows][bCols];
-
-        System.out.println("Перемножение матриц размерами " + aCols
-                + " столбцов и " + aRows + " строк и " + bCols
-                + " столбцов и " + bRows + " строк");
+        System.out.println("Type of data is double[][].");
+        System.out.println("Multitread multiplication of matrixes A " + aRows
+                + "x" + aCols + " and B" + bRows
+                + "x" + bCols + ".");
         long startTime = System.currentTimeMillis();
 
-        int NUM_OF_THREADS = 4;
+        int quantityOfStreams = 4;
 
-        Thread[] thrd = new Thread[NUM_OF_THREADS];
+        Thread[] thrd = new Thread[quantityOfStreams];
 
-        for (int i = 0; i < NUM_OF_THREADS; i++) {
+        for (int i = 0; i < quantityOfStreams; i++) {
             thrd[i] = new Thread(new TreadMultiplyD(A, B, C));
             thrd[i].start(); //thread start
 
         }
-        for (int i = 0; i < NUM_OF_THREADS; i++) {
+        for (int i = 0; i < quantityOfStreams; i++) {
             try {
                 thrd[i].join(); // joining threads
             } catch (InterruptedException e) {
-                System.out.println("Проблема с потоками");
+                System.out.println("Exception of tread.");
             }
         }
 
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
-        System.out.println("Перемножение матриц выполнено за " + time + " мс");
+        System.out.println("Multiplication of matrixes lasted " + time + " ms.");
         setRowsForTread(0);
         System.out.println(getRowsForTread());
         return C;
@@ -197,15 +194,15 @@ public class MatrixD implements Matrix {
 
     public static synchronized void setRowsForTread(int stepRow) {
 
-        if (stepRow == 0) {
+        /*if (stepRow == 0) {
             int temp;
             temp = rowForTread.get();
             rowForTread.compareAndSet(temp, 0);
-        } else {
+        } else {*/
             int temp;
             temp = rowForTread.get();
             rowForTread.compareAndSet(temp, temp + stepRow);
-        }
+       /* }*/
 
     }
 

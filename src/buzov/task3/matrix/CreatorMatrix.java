@@ -3,9 +3,20 @@ package buzov.task3.matrix;
 import java.util.Random;
 import buzov.task3.matrix.err.MatrixIndexOutOfBoundsException;
 import buzov.task3.matrix.err.WrongRangeException;
+import java.math.BigDecimal;
 
 public class CreatorMatrix {
 
+    private static final int accuracy= 3;
+    public static BigDecimal numberRound(double value, int digits) {
+
+        //we approximate the transferred number "value" with accuracy "digits"          
+        BigDecimal num = new BigDecimal("" + value).
+                setScale(digits, BigDecimal.ROUND_HALF_UP);
+        return num;
+    }
+    
+    
     public static int[][] makeRandomInt(int rows, int cols) {
         int[][] matrix;
         matrix = new int[rows][cols];
@@ -23,7 +34,7 @@ public class CreatorMatrix {
         matrix = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                matrix[i][j] = Math.random() * 10;   // fill with random values
+                matrix[i][j] = numberRound(Math.random() * 10, accuracy).doubleValue();   // fill with random values
             }
         }
         return matrix;

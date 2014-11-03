@@ -26,7 +26,7 @@ public class WriterMatrix {
             bw.write(rows + " " + cols + "\r\n");
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    bw.write(A[i][j] + " ");
+                    bw.write(CreatorMatrix.numberRound(A[i][j], 3) + " ");
                 }
                 bw.write("\r\n");
             }
@@ -59,8 +59,9 @@ public class WriterMatrix {
             bw.write(rows + " " + cols + "\r\n");
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    bw.write(A.get(i).get(j) + " ");
+                    bw.write(CreatorMatrix.numberRound(A.get(i).get(j), 3) + " ");
                 }
+                
                 bw.write("\r\n");
             }
         } catch (IOException e) {
