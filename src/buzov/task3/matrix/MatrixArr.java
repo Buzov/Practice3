@@ -98,10 +98,9 @@ public class MatrixArr implements Matrix {
             throw new RuntimeException("Illegal matrix dimensions.");
         }
 
-        System.out.println("Type of data is ArrayList<ArrayList<Double>>.");
-        System.out.println("Multiplication of matrixes A" + aRows
-                + "x" + aCols + " and B" + bRows
-                + "x" + bCols + ".");
+        System.out.println("Перемножение матриц размерами " + aRows
+                + " столбцов и " + aCols + " строк и " + bRows
+                + " столбцов и " + bCols + " строк");
         ArrayList<ArrayList<Double>> C = new ArrayList<>();
 
         for (int i = 0; i < aRows; i++) {
@@ -125,7 +124,7 @@ public class MatrixArr implements Matrix {
 
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
-        System.out.println("Multiplication of matrixes lasted " + time + " ms.");
+        System.out.println("Перемножение матриц выполнено за " + time + " мс");
         return C;
     }
 
@@ -139,7 +138,7 @@ public class MatrixArr implements Matrix {
         return C;
     }
 
-    public static ArrayList<ArrayList<Double>> multiplyTread(ArrayList<ArrayList<Double>> A,
+    public static ArrayList<ArrayList<Double>> multiplyTread(ArrayList<ArrayList<Double>> A, 
                                                              ArrayList<ArrayList<Double>> B) {
         int aRows = A.size();
         int aCols = A.get(0).size();
@@ -149,10 +148,9 @@ public class MatrixArr implements Matrix {
             throw new RuntimeException("Illegal matrix dimensions.");
         }
 
-        System.out.println("Type of data is ArrayList<ArrayList<Double>>.");
-        System.out.println("Multitread multiplication of matrixes A " + aRows
-                + "x" + aCols + " and B" + bRows
-                + "x" + bCols + ".");
+        System.out.println("Перемножение матриц размерами " + aRows
+                + " столбцов и " + aCols + " строк и " + bRows
+                + " столбцов и " + bCols + " строк");
         ArrayList<ArrayList<Double>> C = new ArrayList<>();
 
         for (int i = 0; i < aRows; i++) {
@@ -162,28 +160,31 @@ public class MatrixArr implements Matrix {
             }
         }
 
+        System.out.println("Перемножение матриц размерами " + aCols
+                + " столбцов и " + aRows + " строк и " + bCols
+                + " столбцов и " + bRows + " строк");
         long startTime = System.currentTimeMillis();
 
-        int quantityOfStreams = 2;
+        int NUM_OF_THREADS = 4;
 
-        Thread[] thrd = new Thread[quantityOfStreams];
+        Thread[] thrd = new Thread[NUM_OF_THREADS];
 
-        for (int i = 0; i < quantityOfStreams; i++) {
+        for (int i = 0; i < NUM_OF_THREADS; i++) {
             thrd[i] = new Thread(new TreadMultiplyArr(A, B, C));
             thrd[i].start(); //thread start
 
         }
-        for (int i = 0; i < quantityOfStreams; i++) {
+        for (int i = 0; i < NUM_OF_THREADS; i++) {
             try {
                 thrd[i].join(); // joining threads
             } catch (InterruptedException e) {
-                System.out.println("Exception of tread.");
+                System.out.println("Проблема с потоками");
             }
         }
 
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
-        System.out.println("Multiplication of matrixes lasted " + time + " ms.");
+        System.out.println("Перемножение матриц выполнено за " + time + " мс");
         setRowsForTread(0);
         System.out.println(getRowsForTread());
         return C;

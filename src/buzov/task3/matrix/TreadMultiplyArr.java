@@ -64,16 +64,16 @@ public class TreadMultiplyArr implements Runnable {
 
     private void multiply(int aRows) {
         int step = MatrixD.stepRow;
-        int range = aRows;
-        //for (int i = aRows; i < range; i++) {
+        int range = aRows + step;
+        for (int i = aRows; i < range; i++) {
             for (int j = 0; j < bCols; j++) {
                 double temp = 0;
                 for (int k = 0; k < aCols; k++) {
-                    temp += A.get(aRows).get(k) * B.get(k).get(j);
+                    temp += A.get(i).get(k) * B.get(k).get(j);
                 }
-                C.get(aRows).set(j, temp);
+                C.get(i).set(j, temp);
             }
-        //}
+        }
 
     }
 
