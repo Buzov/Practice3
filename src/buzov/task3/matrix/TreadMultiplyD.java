@@ -8,7 +8,6 @@ public class TreadMultiplyD implements Runnable {
     private int rowTotal;
     private int aRows;
     private int aCols;
-    //private int bRows;
     private int bCols;
     private double[][] A;
     private double[][] B;
@@ -17,7 +16,6 @@ public class TreadMultiplyD implements Runnable {
     public TreadMultiplyD(double[][] A, double[][] B, double[][] C) {
         rowTotal = A.length;
         this.aCols = A[0].length;
-        //this.bRows = B.length;
         this.bCols = B[0].length;;
         this.A = A;
         this.B = B;
@@ -26,7 +24,7 @@ public class TreadMultiplyD implements Runnable {
         numderTread = sumTread;
     }
 
-    public TreadMultiplyD(MatrixD A, MatrixD B, MatrixD C) {
+    public TreadMultiplyD(MatrixDouble A, MatrixDouble B, MatrixDouble C) {
         rowTotal = A.getRowsCount();
         this.aCols = A.getColsCount();
         this.bCols = B.getColsCount();
@@ -40,26 +38,22 @@ public class TreadMultiplyD implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("the tread number " + numderTread + " started.");
+        System.out.println("The tread number " + numderTread + " started.");
 
         while (!stopTread) {
-
-            aRows = MatrixD.getRowsForTreadWithInkrement();
-            System.out.println("the tread number " + numderTread + ". Rows = " + aRows);
-
+            aRows = MatrixDouble.getRowsForTreadWithInkrement();
+            //System.out.println("The tread number " + numderTread + ". Rows = " + aRows + ".");
             if (aRows >= rowTotal) {
                 stopTread();
             } else {
                 multiply(aRows);
             }
         }
-
-        System.out.println("the stream number " + numderTread + " stopped.");
-
+        System.out.println("The stream number " + numderTread + " stopped.");
     }
 
     private void multiply(int aRows) {
-        int step = MatrixD.stepRow;
+        int step = MatrixDouble.stepRow;
         int range = aRows + step;
         for (int i = aRows; i < range; i++) {
             for (int j = 0; j < bCols; j++) {

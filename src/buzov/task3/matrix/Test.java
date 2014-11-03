@@ -1,102 +1,66 @@
 package buzov.task3.matrix;
 
-import java.util.ArrayList;
-import buzov.task3.matrix.err.IllegalSizesException;
-import buzov.task3.matrix.err.MatrixIndexOutOfBoundsException;
+import buzov.task3.matrix.exception.IllegalSizesException;
+import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 
 public class Test {
 
-    public static void main(String[] args) throws MatrixIndexOutOfBoundsException, IllegalSizesException {
+    public static void main(String[] args) {
 
-        int test = 1;
+        try {
+            int test = 0;
+            int rowsA = 100;
+            int colsA = 100;
+            int rowsB = colsA;
+            int colsB = rowsA;
+            String fileNameOfMatrixA = "A" + rowsA + "x" + colsA + ".txt";
+            String fileNameOfMatrixB = "B" + rowsB + "x" + colsB + ".txt";
 
-        switch (test) {
-            case 0:
-                int rows = 3;
-                int cols = 3;
-                MatrixD A2 = new MatrixD(CreatorMatrix.makeRandom(rows, cols));
-                MatrixD B2 = new MatrixD(CreatorMatrix.makeRandom(rows, cols));
-                WriterMatrix.toFile(A2, "Ax.txt");
-                WriterMatrix.toFile(B2, "Bx.txt");
-                test = 3;
-                break;
-                
-            case 1:
-                MatrixD A = ReaderMatrix.fromFileInMatrix("Az.txt");
-                MatrixD B = ReaderMatrix.fromFileInMatrix("Bz.txt");
-                /*for (int i = 0; i < 10; i++) {
-                    MatrixD.multiply(A, B);
-                }*/
+            switch (test) {
+                case 0:
+                    MatrixDouble Ad0 = new MatrixDouble(CreatorMatrix.makeRandom(rowsA, colsA));
+                    MatrixDouble Bd0 = new MatrixDouble(CreatorMatrix.makeRandom(rowsB, colsB));
+                    WriterMatrix.write(Ad0, fileNameOfMatrixA);
+                    WriterMatrix.write(Bd0, fileNameOfMatrixB);
+                case 1:
+                    String fileNameOfMatrixCDouble1 = "C" + rowsA + "x" + colsB + "forJavaDouble" + ".txt";
 
-                System.out.println("-----------------------------------");
-                //WriterMatrix.toFile(C, "C_1.txt");
-                /*for (int i = 0; i < 10; i++) {
-                    MatrixD.multiplyTread(A.getArray(), B.getArray());
-                }*/
-                MatrixD CC = new MatrixD(MatrixD.multiplyTread(A.getArray(), B.getArray()));
-                CC.print();
-                //WriterMatrix.toFile(D, "C_2.txt");
-                break;
-            case 2:
-                MatrixD Ad = ReaderMatrix.fromFileInMatrix("Ax.txt");
-                MatrixD Bd = ReaderMatrix.fromFileInMatrix("Bx.txt");
-                /*              
-                 
-                 
-                 for (int i = 0; i < 10; i++) {
-                 MatrixD.multiply(Ad, Bd);
-                 }*/
-                MatrixArr Aarr = ReaderMatrix.fromFileInMatrixArray("Ax.txt");
-                MatrixArr Barr = ReaderMatrix.fromFileInMatrixArray("Bx.txt");
+                    MatrixDouble Ad1 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixA);
+                    MatrixDouble Bd1 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixB);
+                    System.out.println("aRows = " + Ad1.getRowsCount());
+                    System.out.println("bCols = " + Bd1.getColsCount());
+                    MatrixDouble C1 = MatrixDouble.multiply(Ad1, Bd1);
+                    WriterMatrix.write(C1, fileNameOfMatrixCDouble1);
 
-                for (int i = 0; i < 10; i++) {
-                    MatrixArr.multiply(Aarr, Barr);
-                }
-                break;
-            case 3:
-                MatrixD Ad2 = ReaderMatrix.fromFileInMatrix("Az.txt");
-                MatrixD Bd2 = ReaderMatrix.fromFileInMatrix("Bz.txt");
-                MatrixArr Aarr2 = ReaderMatrix.fromFileInMatrixArray("Az.txt");
-                MatrixArr Barr2 = ReaderMatrix.fromFileInMatrixArray("Bz.txt");
-                MatrixD C3 = MatrixD.multiply(Ad2, Bd2);
-                MatrixArr Carr3 = MatrixArr.multiply(Aarr2, Barr2);
-                WriterMatrix.toFile(C3, "C_3.txt");
-                WriterMatrix.toFile(Carr3, "C_4.txt");
-                Ad2.print();
-                System.out.println("--------------------------------------------");
-                MatrixD.print(Bd2.mas);
-                System.out.println(Bd2.getValue(0, 0));   
-                System.out.println("--------------------------------------------");
-                Aarr2.print();
-                System.out.println("--------------------------------------------");
-                Barr2.print();
-                System.out.println("--------------------------------------------");
-                C3.print();
-                System.out.println("--------------------------------------------");
-                Carr3.print();
-                
-                break;
-            case 4:
-                MatrixArr Aarr4 = ReaderMatrix.fromFileInMatrixArray("Az.txt");
-                MatrixArr Barr4 = ReaderMatrix.fromFileInMatrixArray("Bz.txt");
-                /*for (int i = 0; i < 10; i++) {
-                    MatrixD.multiply(A, B);
-                }*/
+                    String fileNameOfMatrixCArr1 = "C" + rowsA + "x" + colsB + "forJavaArr" + ".txt";
+                    MatrixArray Aarr1 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixA);
+                    MatrixArray Barr1 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixB);
+                    MatrixArray Carr1 = MatrixArray.multiply(Aarr1, Barr1);
+                    WriterMatrix.write(Carr1, fileNameOfMatrixCArr1);
+                //break;
+                case 2:
+                    String fileNameOfMatrixCDouble2 = "C" + rowsA + "x" + colsB + "forJavaTreadDouble" + ".txt";
+                    MatrixDouble Ad2 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixA);
+                    MatrixDouble Bd2 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixB);
+                    MatrixDouble CofTreadDouble = new MatrixDouble(MatrixDouble.multiplyTread(Ad2.getArray(),
+                                                                                              Bd2.getArray()));
+                    WriterMatrix.write(CofTreadDouble, fileNameOfMatrixCDouble2);
 
-                System.out.println("-----------------------------------");
-                //WriterMatrix.toFile(C, "C_1.txt");
-                /*for (int i = 0; i < 10; i++) {
-                    MatrixD.multiplyTread(A.getArray(), B.getArray());
-                }*/
-                MatrixArr Carr4 = new MatrixArr(MatrixArr.multiplyTread(Aarr4.getArray(), 
-                                                                        Barr4.getArray()));
-                Carr4.print();
-                //WriterMatrix.toFile(D, "C_2.txt");
-                break;
-               
-            case 5:
-                break;
-            default:
+                    String fileNameOfMatrixCArr2 = "C" + rowsA + "x" + colsB + "forJavaTreadArr" + ".txt";
+                    MatrixArray Aarr2 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixA);
+                    MatrixArray Barr2 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixB);
+                    MatrixArray CofTreadArr = new MatrixArray(MatrixArray.multiplyTread(Aarr2.getArray(),
+                                                                                        Barr2.getArray()));
+                    WriterMatrix.write(CofTreadArr, fileNameOfMatrixCArr2);
+
+                    break;
+                default:
+                    System.out.println("The maximum number of processors available to the virtual machine: "
+                            + Runtime.getRuntime().availableProcessors() + ".");
+                    System.out.println("Exit");
+            }
+        } catch (MatrixIndexOutOfBoundsException | IllegalSizesException e) {
+            System.out.println("Error:" + e.getMessage());
         }
 
     }
