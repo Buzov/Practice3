@@ -1,12 +1,6 @@
 package buzov.task3.matrix;
 
-import buzov.task3.matrix.otput.WriterMatrix;
 import buzov.task3.matrix.input.ReaderMatrix;
-import buzov.task3.matrix.creat.InitsializatorMatrix;
-import buzov.task3.matrix.exception.IllegalSizesException;
-import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Test {
 
