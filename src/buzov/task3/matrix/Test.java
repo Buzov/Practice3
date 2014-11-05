@@ -13,9 +13,9 @@ public class Test {
     public static void main(String[] args) {
 
         try {
-            int test = 2;
-            int rowsA = 10000;
-            int colsA = 10000;
+            int test = 0;
+            int rowsA = 50;
+            int colsA = 20;
             int rowsB = colsA;
             int colsB = rowsA;
             String fileNameOfMatrixA = "A" + rowsA + "x" + colsA + ".txt";
