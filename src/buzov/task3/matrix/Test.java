@@ -41,7 +41,6 @@ public class Test {
                     B = null;
                     C.write(fileNameOfMatrixCDouble1);
                     C = null;
-
                 //break;
                 case 2:
                     String fileNameOfMatrixCDouble2 = "C" + rowsA + "x" + colsB

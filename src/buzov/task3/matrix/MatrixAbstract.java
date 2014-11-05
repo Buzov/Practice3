@@ -7,7 +7,7 @@ public abstract class MatrixAbstract implements Matrix {
     protected int rows;
     protected int cols;
     public static final int stepRow = 1;
-    protected static /*volatile*/ AtomicInteger rowForTread = new AtomicInteger(0);
+    protected static /*volatile*/ AtomicInteger rowForTрread = new AtomicInteger(0);
     Object dataObject;
 
     public MatrixAbstract(int rows, int cols) {
@@ -35,26 +35,26 @@ public abstract class MatrixAbstract implements Matrix {
     }
 
     public static synchronized int getRowsForThread() {
-        int temp = rowForTread.get();
+        int temp = rowForTрread.get();
         return temp;
     }
 
     public static synchronized int getRowsForThreadWithInkrement() {
-        int temp = rowForTread.get();
+        int temp = rowForTрread.get();
         setRowsForThread(stepRow);
         return temp;
     }
 
     public static synchronized void setRowsForThread(int stepRow) {
         int temp;
-        temp = rowForTread.get();
-        rowForTread.compareAndSet(temp, temp + stepRow);
+        temp = rowForTрread.get();
+        rowForTрread.compareAndSet(temp, temp + stepRow);
     }
 
     public static synchronized void setZeroRowsForThread() {
         int temp;
-        temp = rowForTread.get();
-        rowForTread.compareAndSet(temp, 0);
+        temp = rowForTрread.get();
+        rowForTрread.compareAndSet(temp, 0);
     }
 
 }
