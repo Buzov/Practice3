@@ -2,7 +2,7 @@ package buzov.task3.matrix;
 
 import buzov.task3.matrix.otput.WriterMatrix;
 import buzov.task3.matrix.input.ReaderMatrix;
-import buzov.task3.matrix.creat.CreatorMatrix;
+import buzov.task3.matrix.creat.InitsializatorMatrix;
 import buzov.task3.matrix.exception.IllegalSizesException;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 import java.util.logging.Level;
@@ -13,70 +13,56 @@ public class Test {
     public static void main(String[] args) {
 
         try {
-            int test = 0;
-            int rowsA = 23;
-            int colsA = 23;
+            int test = 2;
+            int rowsA = 10000;
+            int colsA = 10000;
             int rowsB = colsA;
             int colsB = rowsA;
             String fileNameOfMatrixA = "A" + rowsA + "x" + colsA + ".txt";
             String fileNameOfMatrixB = "B" + rowsB + "x" + colsB + ".txt";
-            
+            Matrix A = null;
+            Matrix B = null;
+            Matrix C = null;
             switch (test) {
                 case 0:
-                    Matrix A = new MatrixDouble(CreatorMatrix.makeRandomDouble(rowsA, colsA));
+                    A = new MatrixDouble(rowsA, colsA);
+                    A.initialize();
                     A.write(fileNameOfMatrixA);
                     A = null;
-                    Matrix B = new MatrixDouble(CreatorMatrix.makeRandomDouble(rowsB, colsB));
+                    B = new MatrixDouble(rowsB, colsB);
+                    B.initialize();
                     B.write(fileNameOfMatrixB);
                     B = null;
-                    
+
                 case 1:
-                    
+
                     String fileNameOfMatrixCDouble1 = "C" + rowsA + "x" + colsB + "forJavaDouble" + ".txt";
-                    
-                    Matrix A2 = ReaderMatrix.readFromFile(fileNameOfMatrixA, DataType.DOUBLE);
-                    Matrix B2 = ReaderMatrix.readFromFile(fileNameOfMatrixB, DataType.DOUBLE);
-                    
-                    Matrix C2 = B2.multiply(A2, B2);
-                    C2.write(fileNameOfMatrixCDouble1);
-                    
-                    //break;
+                    A = MatrixSelector.getMatrix(rowsA, colsA, DataType.DOUBLE);
+                    B = MatrixSelector.getMatrix(rowsB, colsB, DataType.DOUBLE);
+                    A.read(fileNameOfMatrixA);
+                    B.read(fileNameOfMatrixB);
+
+                    C = A.multiply(B);
+                    A = null;
+                    B = null;
+                    C.write(fileNameOfMatrixCDouble1);
+                    C = null;
+
+                //break;
                 case 2:
-                    /*String fileNameOfMatrixCDouble2 = "C" + rowsA + "x" + colsB + "forJavaTreadDouble" + ".txt";
-                    MatrixDouble Ad2 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixA);
-                    MatrixDouble Bd2 = ReaderMatrix.readFromFileInMatrixDouble(fileNameOfMatrixB);
-                    MatrixDouble CofTreadDouble = new MatrixDouble(MatrixDouble.multiplyTread(Ad2.getArray(),
-                    Bd2.getArray()));
-                    WriterMatrix.write(CofTreadDouble, fileNameOfMatrixCDouble2);
-                    
-                    String fileNameOfMatrixCArr2 = "C" + rowsA + "x" + colsB + "forJavaTreadArr" + ".txt";
-                    MatrixArray Aarr2 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixA);
-                    MatrixArray Barr2 = ReaderMatrix.readFromFileInMatrixArray(fileNameOfMatrixB);
-                    MatrixArray CofTreadArr = new MatrixArray(MatrixArray.multiplyTread(Aarr2.getArray(),
-                    Barr2.getArray()));
-                    WriterMatrix.write(CofTreadArr, fileNameOfMatrixCArr2);
-                    */
+                    String fileNameOfMatrixCDouble2 = "C" + rowsA + "x" + colsB
+                            + "forJavaThreadDouble" + ".txt";
+                    A = ReaderMatrix.readFromFile(fileNameOfMatrixA, DataType.DOUBLE);
+                    B = ReaderMatrix.readFromFile(fileNameOfMatrixB, DataType.DOUBLE);
+
+                    C = A.multiplyThread(B);
+                    C.write(fileNameOfMatrixCDouble2);
+
                     break;
-                case 3:
-                    /*//BigDecimal a = new BigDecimal("" + 5);
-                    //BigDecimal b= new BigDecimal(5);
-                    //System.out.println(a!=b);
-                    
-                    double a = 13.5465;
-                    BigDecimal num = new BigDecimal("" + a).setScale(3, BigDecimal.ROUND_UP);
-                    System.out.println(num.doubleValue());
-                    num = new BigDecimal(a).setScale(3, BigDecimal.ROUND_UP);
-                    System.out.println(num.doubleValue());
-                    default:
-                    System.out.println("The maximum number of processors available to the virtual machine: "
-                    + Runtime.getRuntime().availableProcessors() + ".");
-                    System.out.println("Exit");*/
-                    
+
             }
-        } catch (MatrixIndexOutOfBoundsException ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalSizesException ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception x) {
+            System.out.println(x);
         }
     }
 }

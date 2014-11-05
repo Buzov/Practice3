@@ -2,7 +2,7 @@ package buzov.task3.matrix;
 
 public class MatrixSelector {
 
-    public Matrix getMatrix(int rows, int cols, DataType dataType) {
+    public static Matrix getMatrix(int rows, int cols, DataType dataType) {
         Matrix matrix = null;
         switch (dataType) {
             case DOUBLE:

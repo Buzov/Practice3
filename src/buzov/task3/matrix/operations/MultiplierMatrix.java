@@ -7,12 +7,14 @@ import static buzov.task3.matrix.MatrixAbstract.setZeroRowsForThread;
 import buzov.task3.matrix.MatrixArray;
 import buzov.task3.matrix.MatrixDouble;
 import buzov.task3.matrix.exception.IllegalSizesException;
+import buzov.task3.matrix.exception.IncorrectFormatDfData;
 import buzov.task3.matrix.tread.ThreadSelector;
 import java.util.ArrayList;
 
 public class MultiplierMatrix {
 
-    public static Matrix multiply(Matrix A, Matrix B, DataType dataType) throws IllegalSizesException {
+    public static Matrix multiply(Matrix A, Matrix B, DataType dataType) throws IllegalSizesException, 
+                                                                                IncorrectFormatDfData {
 
         Object objectA = A.getArray();
         Object objectB = B.getArray();
@@ -26,6 +28,9 @@ public class MultiplierMatrix {
 
         switch (dataType) {
             case DOUBLE:
+                if (!(B instanceof MatrixDouble)) {
+                    throw new IncorrectFormatDfData("Incorrect format of data.");
+                }
                 double[][] matrixDoubleA = (double[][]) objectA;
                 double[][] matrixDoubleB = (double[][]) objectB;
                 rowsA = matrixDoubleA.length;
@@ -33,7 +38,7 @@ public class MultiplierMatrix {
                 rowsB = matrixDoubleB.length;
                 colsB = matrixDoubleB[0].length;
                 if (colsA != rowsB) {
-                    throw new RuntimeException("Illegal matrix dimensions.");
+                    throw new IllegalSizesException("Illegal matrix dimensions.");
                 }
                 double[][] matrixDoubleC = new double[rowsA][colsB];
                 for (int i = 0; i < rowsA; i++) {
@@ -47,6 +52,9 @@ public class MultiplierMatrix {
                 C = new MatrixDouble(matrixDoubleC);
                 break;
             case ARRAY:
+                if (!(B instanceof MatrixArray)) {
+                    throw new IncorrectFormatDfData("Incorrect format of data.");
+                }
                 ArrayList<ArrayList<Double>> matrixArrA = (ArrayList<ArrayList<Double>>) objectA;
                 ArrayList<ArrayList<Double>> matrixArrB = (ArrayList<ArrayList<Double>>) objectB;
                 rowsA = matrixArrA.size();
@@ -84,7 +92,7 @@ public class MultiplierMatrix {
         return C;
     }
 
-    public static Matrix multiplyThread(Matrix A, Matrix B, DataType dataType) {
+    public static Matrix multiplyThread(Matrix A, Matrix B, DataType dataType) throws IncorrectFormatDfData, IllegalSizesException {
 
         Object objectA = A.getArray();
         Object objectB = B.getArray();
@@ -96,6 +104,9 @@ public class MultiplierMatrix {
 
         switch (dataType) {
             case DOUBLE:
+                if (!(B instanceof MatrixDouble)) {
+                    throw new IncorrectFormatDfData("Incorrect format of data.");
+                }
                 double[][] matrixDoubleA = (double[][]) objectA;
                 double[][] matrixDoubleB = (double[][]) objectB;
                 rowsA = matrixDoubleA.length;
@@ -105,7 +116,11 @@ public class MultiplierMatrix {
 
                 System.out.println("Type of data is double[][].");
                 C = new MatrixDouble(rowsA, colsB);
+                break;
             case ARRAY:
+                if (!(B instanceof MatrixArray)) {
+                    throw new IncorrectFormatDfData("Incorrect format of data.");
+                }
                 ArrayList<ArrayList<Double>> matrixArrA = (ArrayList<ArrayList<Double>>) objectA;
                 ArrayList<ArrayList<Double>> matrixArrB = (ArrayList<ArrayList<Double>>) objectB;
                 rowsA = matrixArrA.size();
@@ -115,14 +130,13 @@ public class MultiplierMatrix {
 
                 System.out.println("Type of data is ArrayList<ArrayList<Double>>.");
                 C = new MatrixArray(rowsA, colsB);
-
+                break;
         }
 
         if (colsA != rowsB) {
-            throw new RuntimeException("Illegal matrix dimensions.");
+            throw new IllegalSizesException("Illegal matrix dimensions.");
         }
 
-        System.out.println("Type of data is ArrayList<ArrayList<Double>>.");
         System.out.println("Multitread multiplication of matrixes A " + rowsA
                 + "x" + colsA + " and B" + rowsB
                 + "x" + colsB + ".");
@@ -130,9 +144,11 @@ public class MultiplierMatrix {
         int quantityOfStreams;
         if (rowsA <= 100) {
             quantityOfStreams = 1;
+        } else if (rowsA < 1000) {
+            quantityOfStreams = Runtime.getRuntime().availableProcessors();
         } else {
             //The maximum number of processors available to the virtual machine
-            quantityOfStreams = Runtime.getRuntime().availableProcessors();
+            quantityOfStreams = 1 * Runtime.getRuntime().availableProcessors();
         }
 
         Thread[] thrd = new Thread[quantityOfStreams];

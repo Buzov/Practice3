@@ -1,12 +1,12 @@
 package buzov.task3.matrix;
 
+import buzov.task3.matrix.creat.InitsializatorMatrix;
 import buzov.task3.matrix.exception.IllegalSizesException;
+import buzov.task3.matrix.exception.IncorrectFormatDfData;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 import buzov.task3.matrix.input.ReaderMatrix;
 import buzov.task3.matrix.operations.MultiplierMatrix;
 import buzov.task3.matrix.otput.WriterMatrix;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MatrixDouble extends MatrixAbstract {
 
@@ -77,15 +77,20 @@ public class MatrixDouble extends MatrixAbstract {
     }
 
     @Override
-    public Matrix multiply(Matrix A, Matrix B) throws IllegalSizesException {
+    public Matrix multiply(Matrix B) throws IllegalSizesException, IncorrectFormatDfData {
 
-        return MultiplierMatrix.multiply(A, B, DataType.DOUBLE);
+        return MultiplierMatrix.multiply(this, B, DataType.DOUBLE);
     }
 
     @Override
-    public Matrix multiplyThread(Matrix A, Matrix B) {
+    public Matrix multiplyThread(Matrix B) throws IncorrectFormatDfData, IllegalSizesException {
 
-        return MultiplierMatrix.multiplyThread(A, B, DataType.DOUBLE);
+        return MultiplierMatrix.multiplyThread(this, B, DataType.DOUBLE);
+    }
+    
+    @Override
+    public void initialize() {
+        InitsializatorMatrix.makeRandom(this, DataType.DOUBLE);
     }
 
 }

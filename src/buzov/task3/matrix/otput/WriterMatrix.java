@@ -2,7 +2,7 @@ package buzov.task3.matrix.otput;
 
 import buzov.task3.matrix.DataType;
 import buzov.task3.matrix.Matrix;
-import buzov.task3.matrix.creat.CreatorMatrix;
+import buzov.task3.matrix.creat.InitsializatorMatrix;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -27,7 +27,7 @@ public class WriterMatrix {
                     bw.write(rows + " " + cols + "\r\n");
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < cols; j++) {
-                            bw.write(CreatorMatrix.roundNumber(matrixDoubleA[i][j], 3) + " ");
+                            bw.write(InitsializatorMatrix.roundNumber(matrixDoubleA[i][j], 3) + " ");
                         }
                         bw.write("\r\n");
                     }
@@ -44,7 +44,7 @@ public class WriterMatrix {
                     bw.write(rows + " " + cols + "\r\n");
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < cols; j++) {
-                            bw.write(CreatorMatrix.roundNumber(matrixArrA.get(i).get(j), 3) + " ");
+                            bw.write(InitsializatorMatrix.roundNumber(matrixArrA.get(i).get(j), 3) + " ");
                         }
 
                         bw.write("\r\n");

@@ -1,6 +1,7 @@
 package buzov.task3.matrix;
 
 import buzov.task3.matrix.exception.IllegalSizesException;
+import buzov.task3.matrix.exception.IncorrectFormatDfData;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 
 /**
@@ -24,11 +25,13 @@ public interface Matrix {
     void print();
     
     Matrix read(String path);
-    
-    void write(String path);
 
-    Matrix multiply(Matrix A, Matrix B) throws IllegalSizesException;
+    void write(String path);
     
-    Matrix multiplyThread(Matrix A, Matrix B);
+    void initialize();
+
+    Matrix multiply(Matrix B) throws IllegalSizesException, IncorrectFormatDfData;
+
+    Matrix multiplyThread(Matrix B) throws IllegalSizesException, IncorrectFormatDfData;
 
 }
