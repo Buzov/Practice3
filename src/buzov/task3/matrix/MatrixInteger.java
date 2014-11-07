@@ -2,34 +2,29 @@ package buzov.task3.matrix;
 
 import buzov.task3.matrix.creat.InitsializatorMatrix;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
-import java.util.ArrayList;
 
 /**
  *
  * @author Artur Buzov
  */
-public class MatrixArray extends MatrixAbstract {
+public class MatrixInteger extends MatrixAbstract {
 
-    private ArrayList<ArrayList<Double>> mas;
+    /**
+     *
+     */
+    public int[][] mas;
 
     /**
      * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
-     * Type of the massif of the matrix is <b>ArrayList(ArrayList(Double))</b>..
+     * Type of the massif of the matrix is <b>int [][]</b>.
      *
      * @param rows quantity of rows of the matrix.
      * @param cols uantity of columns of the matrix.
      */
-    public MatrixArray(int rows, int cols) {
+    public MatrixInteger(int rows, int cols) {
         super(rows, cols);
-        mas = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            mas.add(new ArrayList<Double>(cols));
-            for (int j = 0; j < cols; j++) {
-                mas.get(i).add(Double.NaN);
-            }
-        }
-        dataType = "ARRAY";
-
+        mas = new int[rows][cols];
+        dataType = "INTEGER";
     }
 
     /**
@@ -37,28 +32,28 @@ public class MatrixArray extends MatrixAbstract {
      *
      * @param object
      */
-    public MatrixArray(Object object) {
+    public MatrixInteger(Object object) {
         super(object);
-        mas = (ArrayList<ArrayList<Double>>) dataObject;
-        this.rows = mas.size();
-        this.cols = mas.get(0).size();
-        dataType = "ARRAY";
+        this.mas = (int[][]) object;
+        this.rows = mas.length;
+        this.cols = mas[0].length;
+        dataType = "INTEGER";
     }
 
     @Override
     public double getValue(int row, int col) throws MatrixIndexOutOfBoundsException {
-        if ((row < 0) || (col < 0) || (row >= mas.size()) || (col >= mas.get(0).size())) {
+        if ((row < 0) || (col < 0) || (row >= mas.length) || (col >= mas[0].length)) {
             throw new MatrixIndexOutOfBoundsException("Inadmissible value of an index.");
         }
-        return mas.get(row).get(col);
+        return mas[row][col];
     }
 
     @Override
     public void setValue(int row, int col, double value) throws MatrixIndexOutOfBoundsException {
-        if ((row < 0) || (col < 0) || (row >= mas.size()) || (col >= mas.get(0).size())) {
+        if ((row < 0) || (col < 0) || (row >= mas.length) || (col >= mas[0].length)) {
             throw new MatrixIndexOutOfBoundsException("Inadmissible value of an index.");
         }
-        mas.get(row).set(col, (double) value);
+        mas[row][col] = (int) value;
     }
 
     @Override
@@ -68,7 +63,7 @@ public class MatrixArray extends MatrixAbstract {
 
     @Override
     public void initialize() throws MatrixIndexOutOfBoundsException {
-        InitsializatorMatrix.makeRandomDouble(this);
+        InitsializatorMatrix.makeRandomInteger(this);
     }
 
 }

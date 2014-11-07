@@ -1,5 +1,8 @@
-package buzov.task3.matrix;
+package buzov.task3.matrix.test;
 
+import buzov.task3.matrix.DataType;
+import buzov.task3.matrix.Matrix;
+import buzov.task3.matrix.MatrixSelector;
 import buzov.task3.matrix.input.ReaderMatrix;
 
 public class Test {
@@ -8,8 +11,8 @@ public class Test {
 
         try {
             int test = 0;
-            int rowsA = 50;
-            int colsA = 20;
+            int rowsA = 10;
+            int colsA = 10;
             int rowsB = colsA;
             int colsB = rowsA;
             String fileNameOfMatrixA = "A" + rowsA + "x" + colsA + ".txt";
@@ -19,29 +22,36 @@ public class Test {
             Matrix C = null;
             switch (test) {
                 case 0:
-                    A = new MatrixDouble(rowsA, colsA);
+                    A = MatrixSelector.getMatrix(rowsA, colsA, DataType.DOUBLE);
+
                     A.initialize();
+                    
                     A.write(fileNameOfMatrixA);
-                    A = null;
-                    B = new MatrixDouble(rowsB, colsB);
+                    //A = null;
+                    B = MatrixSelector.getMatrix(rowsB, colsB, DataType.DOUBLE);
                     B.initialize();
                     B.write(fileNameOfMatrixB);
-                    B = null;
+                    //B = null;
+                    System.out.println(A.getDataType().equals(B.getDataType()));
 
+                //break;
                 case 1:
 
                     String fileNameOfMatrixCDouble1 = "C" + rowsA + "x" + colsB + "forJavaDouble" + ".txt";
-                    A = MatrixSelector.getMatrix(rowsA, colsA, DataType.DOUBLE);
-                    B = MatrixSelector.getMatrix(rowsB, colsB, DataType.DOUBLE);
+                    A = MatrixSelector.getMatrix(rowsA, colsA, DataType.INTEGER);
+                    B = MatrixSelector.getMatrix(rowsB, colsB, DataType.INTEGER);
                     A.read(fileNameOfMatrixA);
                     B.read(fileNameOfMatrixB);
 
+                    A.print();
+                    B.print();
                     C = A.multiply(B);
+                    //C.print();
                     A = null;
                     B = null;
                     C.write(fileNameOfMatrixCDouble1);
                     C = null;
-                //break;
+                break;
                 case 2:
                     String fileNameOfMatrixCDouble2 = "C" + rowsA + "x" + colsB
                             + "forJavaThreadDouble" + ".txt";
@@ -50,7 +60,9 @@ public class Test {
 
                     C = A.multiplyThread(B);
                     C.write(fileNameOfMatrixCDouble2);
-
+                    //A.print();
+                    //B.print();
+                    //C.print();
                     break;
 
             }

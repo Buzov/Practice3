@@ -1,27 +1,43 @@
 package buzov.task3.matrix;
 
 import buzov.task3.matrix.creat.InitsializatorMatrix;
-import buzov.task3.matrix.exception.IllegalSizesException;
-import buzov.task3.matrix.exception.IncorrectFormatDfData;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
-import buzov.task3.matrix.input.ReaderMatrix;
-import buzov.task3.matrix.operations.MultiplierMatrix;
-import buzov.task3.matrix.otput.WriterMatrix;
 
+/**
+ *
+ * @author Artur Buzov
+ */
 public class MatrixDouble extends MatrixAbstract {
 
+    /**
+     *
+     */
     public double[][] mas;
 
+    /**
+     * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
+     * Type of the massif of the matrix is <b>double [][]</b>.
+     *
+     * @param rows quantity of rows of the matrix.
+     * @param cols uantity of columns of the matrix.
+     */
     public MatrixDouble(int rows, int cols) {
         super(rows, cols);
         mas = new double[rows][cols];
+        dataType = "DOUBLE";
     }
 
+    /**
+     * Creates the matrix and sets its array.
+     *
+     * @param object
+     */
     public MatrixDouble(Object object) {
         super(object);
         this.mas = (double[][]) object;
         this.rows = mas.length;
         this.cols = mas[0].length;
+        dataType = "DOUBLE";
     }
 
     @Override
@@ -46,51 +62,8 @@ public class MatrixDouble extends MatrixAbstract {
     }
 
     @Override
-    public void print() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.printf("%8.3f ", mas[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    @Override
-    public Matrix read(String path) {
-        Matrix matrix = null;
-
-        try {
-            matrix = ReaderMatrix.readFromFile(path, DataType.DOUBLE);
-        } catch (MatrixIndexOutOfBoundsException ex) {
-            System.out.println(ex);;
-        }
-        return matrix;
-    }
-
-    @Override
-    public void write(String path) {
-        try {
-            WriterMatrix.write(this, path, DataType.DOUBLE);
-        } catch (MatrixIndexOutOfBoundsException e) {
-            System.out.println(e);
-        }
-    }
-
-    @Override
-    public Matrix multiply(Matrix B) throws IllegalSizesException, IncorrectFormatDfData {
-
-        return MultiplierMatrix.multiply(this, B, DataType.DOUBLE);
-    }
-
-    @Override
-    public Matrix multiplyThread(Matrix B) throws IncorrectFormatDfData, IllegalSizesException {
-
-        return MultiplierMatrix.multiplyThread(this, B, DataType.DOUBLE);
-    }
-    
-    @Override
-    public void initialize() {
-        InitsializatorMatrix.makeRandom(this, DataType.DOUBLE);
+    public void initialize() throws MatrixIndexOutOfBoundsException {
+        InitsializatorMatrix.makeRandomDouble(this);
     }
 
 }

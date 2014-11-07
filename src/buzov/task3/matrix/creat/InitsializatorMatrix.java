@@ -1,55 +1,73 @@
 package buzov.task3.matrix.creat;
 
-import buzov.task3.matrix.DataType;
 import buzov.task3.matrix.Matrix;
-import buzov.task3.matrix.tread.MultiplyThreadArray;
-import buzov.task3.matrix.tread.MultiplyThreadDouble;
+import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
+/**
+ *
+ * @author Artur Buzov
+ */
 public class InitsializatorMatrix {
 
     private static final int accuracy = 3;
+    private static final int maxNumber = 10;
 
+    /**
+     * Rounds the number wich the given accuracy.
+     *
+     * @param value The number, which will be rounded.
+     * @param digits The value of calculations accuracy.
+     * @return
+     */
     public static BigDecimal roundNumber(double value, int digits) {
         //we approximate the transferred number "value" with accuracy "digits"          
         BigDecimal num = new BigDecimal(value).setScale(digits, BigDecimal.ROUND_UP);
         return num;
     }
 
-    public static void makeRandom(Matrix matrix, DataType dataType) {
-        Object objectA = matrix.getArray();
-        int rows = 0;
-        int cols = 0;
+    /**
+     * The method fills the matrix with type numbers. 
+     * Type of numbers is <b>double</b>.
+     *
+     * @param matrix filled matrix
+     * @throws MatrixIndexOutOfBoundsException
+     */
+    public static void makeRandomDouble(Matrix matrix) throws MatrixIndexOutOfBoundsException {
 
-        switch (dataType) {
-            case DOUBLE:
-                
-                double[][] matrixDoubleA = (double[][]) objectA;
-                rows = matrixDoubleA.length;
-                cols = matrixDoubleA[0].length;
-                for (int i = 0; i < rows; i++) {
-                    for (int j = 0; j < cols; j++) {
-                        // fill with random values
-                        matrixDoubleA[i][j] = roundNumber(Math.random() * 10, accuracy).doubleValue();
-                    }
-                }
-                break;
-            case ARRAY:
-                ArrayList<ArrayList<Double>> matrixArrA = (ArrayList<ArrayList<Double>>) objectA;
-                rows = matrixArrA.size();
-                cols = matrixArrA.get(0).size();
-                double temp = 0;
-                for (int i = 0; i < rows; i++) {
-                    matrixArrA.add(new ArrayList<Double>());
-                    for (int j = 0; j < cols; j++) {
-                        // fill with random values
-                        temp = roundNumber(Math.random() * 10, accuracy).doubleValue();
-                        matrixArrA.get(i).add(temp);
-                    }
-                }
-                break;
+        int rows = matrix.getRowsCount();
+        int cols = matrix.getColsCount();
+        double temp = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // fill with random values
+                temp = roundNumber(Math.random() * maxNumber, accuracy).doubleValue();
+                matrix.setValue(i, j, temp);
+            }
         }
 
     }
+
+    /**
+     * The method fills the matrix with type numbers. 
+     * Type of numbers is <b>int</b>.
+     *
+     * @param matrix filled matrix
+     * @throws MatrixIndexOutOfBoundsException
+     */
+    public static void makeRandomInteger(Matrix matrix) throws MatrixIndexOutOfBoundsException {
+
+        int rows = matrix.getRowsCount();
+        int cols = matrix.getColsCount();
+        double temp = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // fill with random values
+                temp = (int) (Math.random() * maxNumber);
+                matrix.setValue(i, j, temp);
+            }
+        }
+
+    }
+
 }

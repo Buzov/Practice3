@@ -1,66 +1,60 @@
 package buzov.task3.matrix.otput;
 
-import buzov.task3.matrix.DataType;
 import buzov.task3.matrix.Matrix;
-import buzov.task3.matrix.creat.InitsializatorMatrix;
 import buzov.task3.matrix.exception.MatrixIndexOutOfBoundsException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
+/**
+ *
+ * @author Artur Buzov
+ */
 public class WriterMatrix {
 
-    public static void write(Matrix matrix, String path, DataType dataType) throws MatrixIndexOutOfBoundsException {
-        Object object = matrix.getArray();
-        BufferedWriter bw = null;
-        int rows = 0;
-        int cols = 0;
+    /**
+     * This method writes down the matrix in the file.
+     * 
+     * @param matrix Matrix which will be written in the file.
+     * @param path Path to the file.
+     * @throws MatrixIndexOutOfBoundsException
+     */
+    public static void write(Matrix matrix, String path) throws MatrixIndexOutOfBoundsException {
 
-        switch (dataType) {
-            case DOUBLE:
-                try {
-                    double[][] matrixDoubleA = (double[][]) object;
-                    rows = matrixDoubleA.length;
-                    cols = matrixDoubleA[0].length;
-                    bw = new BufferedWriter(new FileWriter(path));
-                    bw.write(rows + " " + cols + "\r\n");
-                    for (int i = 0; i < rows; i++) {
-                        for (int j = 0; j < cols; j++) {
-                            bw.write(InitsializatorMatrix.roundNumber(matrixDoubleA[i][j], 3) + " ");
-                        }
-                        bw.write("\r\n");
-                    }
-                } catch (IOException e) {
-                    System.out.println("Не удается произвести запись в указанный файл");
-                }
-                break;
-            case ARRAY:
-                try {
-                    ArrayList<ArrayList<Double>> matrixArrA = (ArrayList<ArrayList<Double>>) object;
-                    rows = matrixArrA.size();
-                    cols = matrixArrA.get(0).size();
-                    bw = new BufferedWriter(new FileWriter(path));
-                    bw.write(rows + " " + cols + "\r\n");
-                    for (int i = 0; i < rows; i++) {
-                        for (int j = 0; j < cols; j++) {
-                            bw.write(InitsializatorMatrix.roundNumber(matrixArrA.get(i).get(j), 3) + " ");
-                        }
+        int rows = matrix.getRowsCount();
+        int cols = matrix.getColsCount();
 
-                        bw.write("\r\n");
-                    }
-                } catch (IOException e) {
-                    System.out.println("Не удается произвести запись в указанный файл");
+        BufferedWriter buffer = null;
+
+        long startTime = System.currentTimeMillis();
+
+        try {
+            buffer = new BufferedWriter(new FileWriter(path));
+            buffer.write(rows + " " + cols + "\r\n");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    buffer.write(matrix.getValue(i, j) + " ");
                 }
-                break;
+                buffer.write("\r\n");
+            }
+        } catch (IOException e) {
+            System.out.println("It is not possible to make record in the specified file.");
+        } catch (MatrixIndexOutOfBoundsException ex) {
+            System.out.println("Error: " + ex);
         }
 
         try {
-            bw.flush();
-            bw.close();
+            buffer.flush();
+            buffer.close();
         } catch (IOException e) {
-            System.out.println("Ошибка ввода / вывода");
+            System.out.println("Error of input-output.");
         }
+
+        //run time
+        long endTime = System.currentTimeMillis();
+        long time = endTime - startTime;
+
+        System.out.println("Recording of the file lasted " + time + " ms.");
 
     }
 
