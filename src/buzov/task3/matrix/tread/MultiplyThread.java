@@ -59,7 +59,7 @@ public class MultiplyThread implements Runnable {
         //limiter
         int range = rows + step;
         for (int i = rows; i < range; i++) {
-            if ((rowsA >= 0) && (i % stepProgress == 0)) {
+            if ((rowsA >= 1000) && (i % stepProgress == 0)) {
                 //Multiplication progress
                 System.out.println("Multiplication progress " + i / stepProgress * 10 + "%.");
             }

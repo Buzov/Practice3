@@ -49,7 +49,7 @@ public abstract class MatrixAbstract implements Matrix {
     Object dataObject;
 
     /**
-     * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
+     * Creates the matrix which size is equal <b>rows</b> x <b>cols</b>.
      * 
      * @param rows quantity of rows of the matrix.
      * @param cols quantity of columns of the matrix.
@@ -234,5 +234,11 @@ public abstract class MatrixAbstract implements Matrix {
 
         return MultiplierMatrix.multiplyThread(this, B);
     }
+    
+    @Override
+    public void initialize() throws MatrixIndexOutOfBoundsException {
+        InitsializatorMatrix.makeRandomDouble(this);
+    }
+
 
 }

@@ -13,7 +13,7 @@ public class MatrixArray extends MatrixAbstract {
     private ArrayList<ArrayList<Double>> mas;
 
     /**
-     * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
+     * Creates the matrix which size is equal <b>rows</b> x <b>cols</b>.
      * Type of the massif of the matrix is <b>ArrayList(ArrayList(Double))</b>..
      *
      * @param rows quantity of rows of the matrix.
@@ -65,10 +65,5 @@ public class MatrixArray extends MatrixAbstract {
     public Object getArray() {
         return (Object) mas;
     }
-
-    @Override
-    public void initialize() throws MatrixIndexOutOfBoundsException {
-        InitsializatorMatrix.makeRandomDouble(this);
-    }
-
+   
 }

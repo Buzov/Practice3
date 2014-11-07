@@ -15,8 +15,7 @@ public class MatrixDouble extends MatrixAbstract {
     public double[][] mas;
 
     /**
-     * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
-     * Type of the massif of the matrix is <b>double [][]</b>.
+     * Creates the matrix which size is equal <b>rows</b> x <b>cols</b>. Type of the massif of the matrix is <b>double [][]</b>.
      *
      * @param rows quantity of rows of the matrix.
      * @param cols uantity of columns of the matrix.
@@ -59,11 +58,6 @@ public class MatrixDouble extends MatrixAbstract {
     @Override
     public Object getArray() {
         return (Object) mas;
-    }
-
-    @Override
-    public void initialize() throws MatrixIndexOutOfBoundsException {
-        InitsializatorMatrix.makeRandomDouble(this);
     }
 
 }

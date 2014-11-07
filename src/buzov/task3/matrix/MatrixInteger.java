@@ -15,7 +15,7 @@ public class MatrixInteger extends MatrixAbstract {
     public int[][] mas;
 
     /**
-     * Creates the matrix which size is equal <b>rows</b>x<b>cols</b>.
+     * Creates the matrix which size is equal <b>rows</b> x <b>cols</b>.
      * Type of the massif of the matrix is <b>int [][]</b>.
      *
      * @param rows quantity of rows of the matrix.

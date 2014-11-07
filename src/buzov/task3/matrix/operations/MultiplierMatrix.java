@@ -65,7 +65,7 @@ public class MultiplierMatrix {
 
         for (int i = 0; i < rowsA; i++) {
 
-            if ((rowsA >= 0) && (i % stepProgress == 0)) {
+            if ((rowsA >= 1000) && (i % stepProgress == 0)) {
                 //Multiplication progress
                 System.out.println("Multiplication progress " + i / stepProgress * 10 + "%.");
             }
@@ -130,9 +130,10 @@ public class MultiplierMatrix {
         if (rowsA <= 100) {
             quantityOfStreams = 1;
         } else if (rowsA < 1000) {
+            //The maximum number of processors available to the virtual machine
             quantityOfStreams = Runtime.getRuntime().availableProcessors();
         } else {
-            //The maximum number of processors available to the virtual machine
+            //The maximum number of threads else size of the matrix >= 1000
             quantityOfStreams = 2 * Runtime.getRuntime().availableProcessors();
         }
         
